@@ -19,6 +19,10 @@ body {
   margin-top: $space-m;
 }
 
+.mb-s {
+  margin-bottom: $space-s;
+}
+
 .mb-m { 
   margin-bottom: $space-m;
 }
@@ -29,4 +33,13 @@ body {
 
 .d-flex {
   display: flex;
+}
+
+.d-flex.space-between {
+  justify-content: space-between;
+}
+
+.drop-down {
+  font-size: $font-s;
+  padding: $space-xs;
 }

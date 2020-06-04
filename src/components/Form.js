@@ -106,7 +106,7 @@ const Form = (props) => {
   return (
     <form className="Form" onSubmit={handleSubmit}>
       <div className="Form__container">
-        <div className="Form__name mb-m d-flex">
+        <div className="Form__name mb-m d-flex space-between">
           <div className="Form__name-container mr-s">
             <input type="text" className="input-text" name="firstName" value={state.firstName} placeholder="First name" onChange={handleChange} />
           </div>
@@ -120,22 +120,22 @@ const Form = (props) => {
         <div className="Form__password mb-m">
           <input type="text" className="input-text" name="password" value={state.password} placeholder="New password" onChange={handleChange} />
         </div>
-        <div className="Form__birthday mt-m">
-          <label htmlFor="birthday">Birthday</label>
-          <span>
-            <select name="birthday_day" id="" onChange={handleChange}>
-              <option value="0">Day</option>
-              {birthdayDays()}
-            </select>
-            <select name="birthday_month" id="" onChange={handleChange}>
-              <option value="0">Month</option>
-              {birthdayMonths()}
-            </select>
-            <select name="birthday_year" id="" onChange={handleChange}>
-              <option value="0">Year</option>
-              {birthdayYears()}
-            </select>
-          </span>          
+        <div className="Form__birthday">
+          <div className="Form__birthday-label mt-m mb-s">
+            <label htmlFor="birthday">Birthday</label>
+          </div>
+          <select className="drop-down" name="birthday_day" id="" onChange={handleChange}>
+            <option value="0">Day</option>
+            {birthdayDays()}
+          </select>
+          <select className="drop-down" name="birthday_month" id="" onChange={handleChange}>
+            <option value="0">Month</option>
+            {birthdayMonths()}
+          </select>
+          <select className="drop-down" name="birthday_year" id="" onChange={handleChange}>
+            <option value="0">Year</option>
+            {birthdayYears()}
+          </select>
         </div>
         <div className="Form__gender">
           <label htmlFor="gender">Gender</label>

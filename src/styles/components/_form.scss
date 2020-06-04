@@ -14,5 +14,16 @@
   .Form__name-container {
     width: 194px;
   }
+
+  .Form__password {
+    display: inline-block;
+    width: 100%;
+  }
+
+  .Form__birthday-label {
+    font-size: $font-m;
+    color: $off-grey;
+    font-weight: bold;
+  }
 }
 
