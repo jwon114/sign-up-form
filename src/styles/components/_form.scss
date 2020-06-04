@@ -1,16 +1,6 @@
 .Form__container {
   width: 399px;
 
-  .input-text {
-    font-size: $font-m;
-    padding: 8px 10px;
-    box-sizing: border-box;
-    width: 100%;
-    border-color: $light-grey;
-    border-radius: 5px;
-    border: 1px solid $silver
-  }
-
   .Form__name-container {
     width: 194px;
   }
@@ -20,10 +10,45 @@
     width: 100%;
   }
 
-  .Form__birthday-label {
-    font-size: $font-m;
-    color: $off-grey;
-    font-weight: bold;
+  .Form__gender {
+    .Form__gender-container {
+      display: inline-block;
+      padding: 5px 0 5px 4px;
+
+      > label {
+        color: $night-black;
+        font-size: $font-m;
+        font-weight: normal;
+        line-height: 18px;
+        padding: 0 10px 0 3px;
+      }
+
+      > label:first-child {
+        margin-right: 4px;
+      }
+    }
+
+    .Form__gender-custom {
+      > select {
+        width: 100%;
+        margin: 4px 0;
+        height: 30px;
+        padding: 2px;
+      }
+
+      .sub-text {
+        color: $dark-grey;
+        font-size: 12px;
+      }
+    }
+  }
+}
+
+.Form__termsAndConditions {
+  .Form__termsAndConditions-text {
+    font-size: 11px;
+    width: 316px;
+    color: $wolf-grey;
   }
 }
 

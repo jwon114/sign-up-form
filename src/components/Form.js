@@ -48,7 +48,7 @@ const Form = (props) => {
 
   const birthdayMonths = () => {
     const months = [];
-    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     for(var i = 1; i <= 12; i++) {
       months.push(<option key={i} value={i}>{monthNames[i - 1]}</option>);
     }
@@ -83,21 +83,23 @@ const Form = (props) => {
   }
 
   const customGender = () => (
-    <div className="Form__gender_custom">
-      <select name="preferred_pronoun" id="" defaultValue="0" onChange={handleChange}>
+    <div className="Form__gender-custom mt-m">
+      <select className="drop-down" name="preferred_pronoun" id="" defaultValue="0" onChange={handleChange}>
         <option value="0" disabled>Select your pronoun</option>
         <option value="She">She: "Wish her a happy birthday!"</option>
         <option value="He">He: "Wish him a happy birthday!"</option>
         <option value="They">They: "Wish them a happy birthday!"</option>
       </select>
-      <div>Your pronoun is visible to everyone.</div>
-      <input type="text" name="gender" placeholder="Gender (optional)" value={state.gender} onChange={handleChange} />
+      <div className="sub-text">Your pronoun is visible to everyone.</div>
+      <div className="my-s">
+        <input type="text" className="input-text" name="gender" placeholder="Gender (optional)" value={state.gender} onChange={handleChange} />
+      </div>
     </div>
   )
 
   const termsAndConditions = () => (
-    <div className="Form_termsAndConditions">
-      <p>
+    <div className="Form__termsAndConditions">
+      <p className="Form__termsAndConditions-text">
         By clicking Sign Up, you agree to our Terms. Learn how we collect, use and share your data in our Data Policy and how we use cookies and similar technology in our Cookie Policy. You may receive SMS notifications from us and can opt out at any time.
       </p>
     </div>
@@ -121,7 +123,7 @@ const Form = (props) => {
           <input type="text" className="input-text" name="password" value={state.password} placeholder="New password" onChange={handleChange} />
         </div>
         <div className="Form__birthday">
-          <div className="Form__birthday-label mt-m mb-s">
+          <div className="sub-heading mt-m mb-s">
             <label htmlFor="birthday">Birthday</label>
           </div>
           <select className="drop-down" name="birthday_day" id="" onChange={handleChange}>
@@ -138,12 +140,18 @@ const Form = (props) => {
           </select>
         </div>
         <div className="Form__gender">
-          <label htmlFor="gender">Gender</label>
-          <span>
+          <div className="sub-heading mt-m mb-s">
+            <label htmlFor="gender">Gender</label>
+          </div>
+          <span className="Form__gender-container">
             <input type="radio" name="gender" value="female" onChange={handleGenderChange} />
             <label htmlFor="female">Female</label>
+          </span>
+          <span className="Form__gender-container">
             <input type="radio" name="gender" value="male" onChange={handleGenderChange} />
             <label htmlFor="male">Male</label>
+          </span>
+          <span className="Form__gender-container">
             <input type="radio" name="gender" value="custom" onChange={handleGenderChange} />
             <label htmlFor="custom">Custom</label>
           </span>
