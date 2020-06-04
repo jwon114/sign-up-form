@@ -1,0 +1,18 @@
+.Form__container {
+  width: 399px;
+
+  .input-text {
+    font-size: $font-m;
+    padding: 8px 10px;
+    box-sizing: border-box;
+    width: 100%;
+    border-color: $light-grey;
+    border-radius: 5px;
+    border: 1px solid $silver
+  }
+
+  .Form__name-container {
+    width: 194px;
+  }
+}
+
