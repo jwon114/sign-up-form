@@ -52,3 +52,17 @@
   }
 }
 
+.Form__submit-button-container {
+  margin: 10px 0;
+
+  button {
+    padding: 7px 20px;
+    min-width: 194px;
+    line-height: 126%;
+    font-family: 'Freight Sans Bold', Helvetica, Arial, sans-serif !important;
+    font-weight: bold !important;
+    letter-spacing: normal;
+    font-size: 19px;
+  }
+}
+

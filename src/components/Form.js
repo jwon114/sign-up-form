@@ -1,165 +1,127 @@
 import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
 
 const Form = (props) => {
-  const [state, setState] = useState({
-    firstName: '',
-    surname: '',
-    contact: '',
-    password: '',
-    birthday_day: '',
-    birthday_month: '',
-    birthday_year: '',
-    preferred_pronoun: '',
-    gender: ''
-  });
-
+  const { register, handleSubmit, errors, reset } = useForm();
   const [showCustomGender, setShowCustomGender] = useState(false); 
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // props.onSubmit(inputValue);
-    setState({
-      firstName: '',
-      surname: '',
-      contact: '',
-      password: '',
-      birthday_day: '',
-      birthday_month: '',
-      birthday_year: '',
-      preferred_pronoun: '',
-      gender: ''
-    });
+  
+  const onSubmit = data => {
+    reset();
+    props.onSubmit();
+    console.log(data)
+    console.log(errors)
   }
 
-  const handleChange = (event) => {
-    setState({
-      ...state,
-      [event.target.name]: event.target.value
-    });
-  }
+  const handleGenderChange = event => setShowCustomGender(event.target.value === 'custom');
 
-  const birthdayDays = () => {
-    const days = [];
-    for(var i = 1; i <= 31; i++) {
-      days.push(<option key={i} value={i}>{i}</option>);
+  const days = () => {
+    const allDays = [];
+    for (var i = 1; i <= 31; i++) {
+      allDays.push(<option key={i} value={i}>{i}</option>);
     }
-    return days;
-  }
-
-  const birthdayMonths = () => {
-    const months = [];
-    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    for(var i = 1; i <= 12; i++) {
-      months.push(<option key={i} value={i}>{monthNames[i - 1]}</option>);
-    }
-    return months;
+    return allDays;
   }
   
-  const birthdayYears = () => {
-    const years = [];
+  const months = () => {
+    const allMonths = [];
+    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    for (var i = 1; i <= 12; i++) {
+      allMonths.push(<option key={i} value={i}>{monthNames[i - 1]}</option>);
+    }
+    return allMonths;
+  }
+  
+  const years = () => {
+    const allYears = [];
     const thisYear = new Date().getFullYear();
-    for(var i = thisYear; i >= thisYear - 115; i--) {
-      years.push(<option key={i} value={i}>{i}</option>);
+    for (var i = thisYear; i >= thisYear - 115; i--) {
+      allYears.push(<option key={i} value={i}>{i}</option>);
     }
-    return years;
+    return allYears;
   }
 
-  const handleGenderChange = (event) => {
-    if (event.target.value === 'custom') {
-      setShowCustomGender(true);
-      setState({
-        ...state,
-        preferred_pronoun: '',
-        gender: ''
-      })
-    } else {
-      setShowCustomGender(false);
-      setState({
-        ...state,
-        preferred_pronoun: '',
-        gender: event.target.value
-      });
-    }
-  }
-
-  const customGender = () => (
-    <div className="Form__gender-custom mt-m">
-      <select className="drop-down" name="preferred_pronoun" id="" defaultValue="0" onChange={handleChange}>
-        <option value="0" disabled>Select your pronoun</option>
-        <option value="She">She: "Wish her a happy birthday!"</option>
-        <option value="He">He: "Wish him a happy birthday!"</option>
-        <option value="They">They: "Wish them a happy birthday!"</option>
-      </select>
-      <div className="sub-text">Your pronoun is visible to everyone.</div>
-      <div className="my-s">
-        <input type="text" className="input-text" name="gender" placeholder="Gender (optional)" value={state.gender} onChange={handleChange} />
-      </div>
-    </div>
-  )
-
-  const termsAndConditions = () => (
-    <div className="Form__termsAndConditions">
-      <p className="Form__termsAndConditions-text">
-        By clicking Sign Up, you agree to our Terms. Learn how we collect, use and share your data in our Data Policy and how we use cookies and similar technology in our Cookie Policy. You may receive SMS notifications from us and can opt out at any time.
-      </p>
-    </div>
-  )
+  const isPositive = value => parseInt(value, 10) > 0;
 
   return (
-    <form className="Form" onSubmit={handleSubmit}>
+    <form className="Form" onSubmit={handleSubmit(onSubmit)}>
       <div className="Form__container">
         <div className="Form__name mb-m d-flex space-between">
           <div className="Form__name-container mr-s">
-            <input type="text" className="input-text" name="firstName" value={state.firstName} placeholder="First name" onChange={handleChange} />
+            <input type="text" className="input-text" name="firstName" ref={register({ required: 'First name is required' })} placeholder="First name" />
+            {errors.firstName && <i className="Form__error-message">{errors.firstName.message}</i>}
           </div>
           <div className="Form__name-container">
-            <input type="text" className="input-text" name="surname" value={state.surname} placeholder="Surname" onChange={handleChange} />
+            <input type="text" className="input-text" name="surname" ref={register({ required: 'Surname is required' })} placeholder="Surname" />
+            {errors.surname && <i className="Form__error-message">{errors.surname.message}</i>}
           </div>
         </div>
         <div className="Form__contact mb-m">
-          <input type="text" className="input-text" name="contact" value={state.contact} placeholder="Mobile number or email address" onChange={handleChange} />
+          <input type="text" className="input-text" name="contact" ref={register({ required: 'Contact details is required' })} placeholder="Mobile number or email address" />
+          {errors.contact && <i className="Form__error-message">{errors.contact.message}</i>}
         </div>
         <div className="Form__password mb-m">
-          <input type="text" className="input-text" name="password" value={state.password} placeholder="New password" onChange={handleChange} />
+          <input type="text" className="input-text" name="password" ref={register({ required: 'Password is required' })} placeholder="New password" />
+          {errors.password && <i className="Form__error-message">{errors.password.message}</i>}
         </div>
         <div className="Form__birthday">
           <div className="sub-heading mt-m mb-s">
             <label htmlFor="birthday">Birthday</label>
           </div>
-          <select className="drop-down" name="birthday_day" id="" onChange={handleChange}>
+          <select className="drop-down" name="birthday.day" ref={register({ validate: { positive: value => isPositive(value) }})} id="">
             <option value="0">Day</option>
-            {birthdayDays()}
+            {days()}
           </select>
-          <select className="drop-down" name="birthday_month" id="" onChange={handleChange}>
+          <select className="drop-down" name="birthday.month" ref={register({ validate: { positive: value => isPositive(value) }})} id="">
             <option value="0">Month</option>
-            {birthdayMonths()}
+            {months()}
           </select>
-          <select className="drop-down" name="birthday_year" id="" onChange={handleChange}>
+          <select className="drop-down" name="birthday.year" ref={register({ validate: { positive: value => isPositive(value) }})} id="">
             <option value="0">Year</option>
-            {birthdayYears()}
+            {years()}
           </select>
+          {(errors.birthday?.day || errors.birthday?.month || errors.birthday?.year) && 
+            <div><i className="Form__error-message">Birthday is required.</i></div>}
         </div>
         <div className="Form__gender">
           <div className="sub-heading mt-m mb-s">
             <label htmlFor="gender">Gender</label>
           </div>
           <span className="Form__gender-container">
-            <input type="radio" name="gender" value="female" onChange={handleGenderChange} />
+            <input type="radio" name="gender" value="female" ref={register({ required: true })} onChange={event => handleGenderChange(event)} />
             <label htmlFor="female">Female</label>
           </span>
           <span className="Form__gender-container">
-            <input type="radio" name="gender" value="male" onChange={handleGenderChange} />
+            <input type="radio" name="gender" value="male" ref={register({ required: true })} onChange={event => handleGenderChange(event)} />
             <label htmlFor="male">Male</label>
           </span>
           <span className="Form__gender-container">
-            <input type="radio" name="gender" value="custom" onChange={handleGenderChange} />
+            <input type="radio" name="gender" value="custom" ref={register({ required: true })} onChange={event => handleGenderChange(event)} />
             <label htmlFor="custom">Custom</label>
           </span>
-          {showCustomGender && customGender()}
+          {errors.gender && <div><i className="Form__error-message">Gender is required.</i></div>}
+          {showCustomGender && <div className="Form__gender-custom mt-m">
+            <select className="drop-down" name="preferred_pronoun" ref={register({ validate: { positive: value => isPositive(value) }})} id="" defaultValue="0">
+              <option value="0" disabled>Select your pronoun</option>
+              <option value="She">She: "Wish her a happy birthday!"</option>
+              <option value="He">He: "Wish him a happy birthday!"</option>
+              <option value="They">They: "Wish them a happy birthday!"</option>
+            </select>
+            {errors.preferred_pronoun && <div><i className="Form__error-message">Preferred pronoun is required.</i></div>}
+            <div className="sub-text">Your pronoun is visible to everyone.</div>
+            <div className="my-s">
+              <input type="text" className="input-text" name="custom_gender" ref={register} placeholder="Gender (optional)" />
+            </div>
+          </div>}
         </div>
       </div>
-      {termsAndConditions()}
-      <input type="submit" value="Sign Up"/>
+      <div className="Form__termsAndConditions">
+        <p className="Form__termsAndConditions-text">
+          By clicking Sign Up, you agree to our Terms. Learn how we collect, use and share your data in our Data Policy and how we use cookies and similar technology in our Cookie Policy. You may receive SMS notifications from us and can opt out at any time.
+        </p>
+      </div>
+      <div className="Form__submit-button-container">
+        <button type="submit" className="button button-green">Sign Up</button>
+      </div>
     </form>
   );
 }
