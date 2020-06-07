@@ -1,10 +1,17 @@
+input {
+  border-color: $light-grey;
+  border-radius: 5px;
+  border: 1px solid $silver;
+}
+
+// input.form-error {
+//   border-color: red;
+// }
+
 input[type=text] {
   outline: none;
   font-size: $font-m;
   padding: 8px 10px;
   box-sizing: border-box;
   width: 100%;
-  border-color: $light-grey;
-  border-radius: 5px;
-  border: 1px solid $silver
 }

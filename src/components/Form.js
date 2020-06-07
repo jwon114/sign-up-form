@@ -69,29 +69,29 @@ const Form = (props) => {
       <div className="Form__container">
         <div className="Form__name mb-m d-flex space-between">
           <div className="Form__name-container mr-s">
-            <Input type="text" name="firstName" register={register} placeholder="First name" />
+            <Input type="text" className={errors.firstName && 'red-border'} name="firstName" register={register} placeholder="First name" />
             {errors.firstName && <i className="Form__error-message">{errors.firstName.message}</i>}
           </div>
           <div className="Form__name-container">
-            <Input type="text" name="surname" register={register} placeholder="Surname" />
+            <Input type="text" className={errors.surname && 'red-border'} name="surname" register={register} placeholder="Surname" />
             {errors.surname && <i className="Form__error-message">{errors.surname.message}</i>}
           </div>
         </div>
         <div className="Form__contact mb-m">
-          <Input type="text" name="contact" register={register} placeholder="Mobile number or email address" />
+          <Input type="text" className={errors.contact && 'red-border'} name="contact" register={register} placeholder="Mobile number or email address" />
           {errors.contact && <i className="Form__error-message">{errors.contact.message}</i>}
         </div>
         <div className="Form__password mb-m">
-          <Input type="text" name="password" register={register} placeholder="New password" />
+          <Input type="text" className={errors.password && 'red-border'} name="password" register={register} placeholder="New password" />
           {errors.password && <i className="Form__error-message">{errors.password.message}</i>}
         </div>
         <div className="Form__birthday">
           <div className="sub-heading mt-m mb-s">
             <label htmlFor="birthday">Birthday</label>
           </div>
-          <Select name="birthday.day" register={register} options={days()} noValue={"Day"} />
-          <Select name="birthday.month" register={register} options={months()} noValue={"Month"} />
-          <Select name="birthday.year" register={register} options={years()} noValue={"Year"} />
+          <Select name="birthday.day" className={errors.birthday?.day && 'red-border'} register={register} options={days()} noValue={"Day"} />
+          <Select name="birthday.month" className={errors.birthday?.month && 'red-border'} register={register} options={months()} noValue={"Month"} />
+          <Select name="birthday.year" className={errors.birthday?.year && 'red-border'} register={register} options={years()} noValue={"Year"} />
           {(errors.birthday?.day || errors.birthday?.month || errors.birthday?.year) &&
             <div><i className="Form__error-message">Birthday is required.</i></div>}
         </div>
@@ -99,21 +99,21 @@ const Form = (props) => {
           <div className="sub-heading mt-m mb-s">
             <label htmlFor="gender">Gender</label>
           </div>
-          <span className="Form__gender-container">
+          <span className={`Form__gender-container ${errors.gender && 'red-border'}`}>
             <Input type="radio" name="gender" value="female" register={register} onChange={event => handleGenderChange(event)} />
             <label htmlFor="female">Female</label>
           </span>
-          <span className="Form__gender-container">
+          <span className={`Form__gender-container ${errors.gender && 'red-border'}`}>
             <Input type="radio" name="gender" value="male" register={register} onChange={event => handleGenderChange(event)}  />
             <label htmlFor="male">Male</label>
           </span>
-          <span className="Form__gender-container">
+          <span className={`Form__gender-container ${errors.gender && 'red-border'}`}>
             <Input type="radio" name="gender" value="custom" register={register} onChange={event => handleGenderChange(event)}  />
             <label htmlFor="custom">Custom</label>
           </span>
           {errors.gender && <div><i className="Form__error-message">Gender is required.</i></div>}
           {showCustomGender && <div className="Form__gender-custom mt-m">
-            <Select name="preferred_pronoun" register={register} id="" options={pronouns()} noValue={"Select your pronoun"} />
+            <Select name="preferred_pronoun" className={errors.preferred_pronoun && 'red-border'} register={register} options={pronouns()} noValue={"Select your pronoun"} />
             {errors.preferred_pronoun && <div><i className="Form__error-message">Preferred pronoun is required.</i></div>}
             <div className="sub-text">Your pronoun is visible to everyone.</div>
             <div className="my-s">
