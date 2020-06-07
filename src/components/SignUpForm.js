@@ -3,13 +3,11 @@ import Header from './Header';
 import Form from './Form';
 
 const SignUpForm = () => {
-  const [state, setState] = useState({ submitted: false });
+  const [submittedState, setSubmittedState] = useState(false);
   
   const handleFormSubmit = () => {
-    setState({
-      ...state,
-      submitted: true
-    });
+    setSubmittedState(true);
+    setTimeout(() => setSubmittedState(false), 3000);
   }
 
   return (
@@ -18,7 +16,7 @@ const SignUpForm = () => {
       <Form 
         onSubmit={handleFormSubmit} 
       />
-      {state.submitted && <div>Form Submitted!</div>}
+      {submittedState && <div>Form Submitted!</div>}
     </div>
   );
 }

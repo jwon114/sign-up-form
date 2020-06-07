@@ -1,85 +1,98 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { string, object } from 'yup';
+import Input from './Input';
+import Select from './Select';
+
+const FormSchema = object().shape({
+  firstName: string().required('First name is required'),
+  surname: string().required('Surname is required'),
+  contact: string().required('Contact number or email is required'),
+  password: string().required('Password is required'),
+  birthday: object({
+    day: string().required(),
+    month: string().required(),
+    year: string().required()
+  }),
+  gender: string().required('Gender is required'),
+  preferred_pronoun: string()
+    .when('gender', {
+      is: 'custom',
+      then: string().required('Preferred pronoun is required')
+    }),
+  custom_gender: string()
+});
+
+const days = () => {
+  const allDays = [];
+  for (var i = 1; i <= 31; i++) {
+    allDays.push(<option key={i} value={i}>{i}</option>);
+  }
+  return allDays;
+}
+
+const months = () => {
+  const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  return monthNames.map((month, i) => <option key={i + 1} value={i + 1}>{month}</option>)
+}
+
+const years = () => {
+  const allYears = [];
+  const thisYear = new Date().getFullYear();
+  for (var i = thisYear; i >= thisYear - 115; i--) {
+    allYears.push(<option key={i} value={i}>{i}</option>);
+  }
+  return allYears;
+}
+
+const pronouns = () => {
+  const pronounList = ['She: "Wish her a happy birthday!', 'He: "Wish him a happy birthday!"', 'They: "Wish them a happy birthday!"'];
+  return pronounList.map((pronoun, i) => <option key={i + 1} value={i + 1}>{pronoun}</option>);
+}
 
 const Form = (props) => {
-  const { register, handleSubmit, errors, reset } = useForm();
+  const { register, handleSubmit, errors, reset } = useForm({
+    validationSchema: FormSchema
+  });
   const [showCustomGender, setShowCustomGender] = useState(false); 
   
   const onSubmit = data => {
+    console.log(data);
     reset();
     props.onSubmit();
-    console.log(data)
-    console.log(errors)
   }
 
   const handleGenderChange = event => setShowCustomGender(event.target.value === 'custom');
-
-  const days = () => {
-    const allDays = [];
-    for (var i = 1; i <= 31; i++) {
-      allDays.push(<option key={i} value={i}>{i}</option>);
-    }
-    return allDays;
-  }
-  
-  const months = () => {
-    const allMonths = [];
-    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    for (var i = 1; i <= 12; i++) {
-      allMonths.push(<option key={i} value={i}>{monthNames[i - 1]}</option>);
-    }
-    return allMonths;
-  }
-  
-  const years = () => {
-    const allYears = [];
-    const thisYear = new Date().getFullYear();
-    for (var i = thisYear; i >= thisYear - 115; i--) {
-      allYears.push(<option key={i} value={i}>{i}</option>);
-    }
-    return allYears;
-  }
-
-  const isPositive = value => parseInt(value, 10) > 0;
 
   return (
     <form className="Form" onSubmit={handleSubmit(onSubmit)}>
       <div className="Form__container">
         <div className="Form__name mb-m d-flex space-between">
           <div className="Form__name-container mr-s">
-            <input type="text" className="input-text" name="firstName" ref={register({ required: 'First name is required' })} placeholder="First name" />
+            <Input type="text" name="firstName" register={register} placeholder="First name" />
             {errors.firstName && <i className="Form__error-message">{errors.firstName.message}</i>}
           </div>
           <div className="Form__name-container">
-            <input type="text" className="input-text" name="surname" ref={register({ required: 'Surname is required' })} placeholder="Surname" />
+            <Input type="text" name="surname" register={register} placeholder="Surname" />
             {errors.surname && <i className="Form__error-message">{errors.surname.message}</i>}
           </div>
         </div>
         <div className="Form__contact mb-m">
-          <input type="text" className="input-text" name="contact" ref={register({ required: 'Contact details is required' })} placeholder="Mobile number or email address" />
+          <Input type="text" name="contact" register={register} placeholder="Mobile number or email address" />
           {errors.contact && <i className="Form__error-message">{errors.contact.message}</i>}
         </div>
         <div className="Form__password mb-m">
-          <input type="text" className="input-text" name="password" ref={register({ required: 'Password is required' })} placeholder="New password" />
+          <Input type="text" name="password" register={register} placeholder="New password" />
           {errors.password && <i className="Form__error-message">{errors.password.message}</i>}
         </div>
         <div className="Form__birthday">
           <div className="sub-heading mt-m mb-s">
             <label htmlFor="birthday">Birthday</label>
           </div>
-          <select className="drop-down" name="birthday.day" ref={register({ validate: { positive: value => isPositive(value) }})} id="">
-            <option value="0">Day</option>
-            {days()}
-          </select>
-          <select className="drop-down" name="birthday.month" ref={register({ validate: { positive: value => isPositive(value) }})} id="">
-            <option value="0">Month</option>
-            {months()}
-          </select>
-          <select className="drop-down" name="birthday.year" ref={register({ validate: { positive: value => isPositive(value) }})} id="">
-            <option value="0">Year</option>
-            {years()}
-          </select>
-          {(errors.birthday?.day || errors.birthday?.month || errors.birthday?.year) && 
+          <Select name="birthday.day" register={register} options={days()} noValue={"Day"} />
+          <Select name="birthday.month" register={register} options={months()} noValue={"Month"} />
+          <Select name="birthday.year" register={register} options={years()} noValue={"Year"} />
+          {(errors.birthday?.day || errors.birthday?.month || errors.birthday?.year) &&
             <div><i className="Form__error-message">Birthday is required.</i></div>}
         </div>
         <div className="Form__gender">
@@ -87,29 +100,24 @@ const Form = (props) => {
             <label htmlFor="gender">Gender</label>
           </div>
           <span className="Form__gender-container">
-            <input type="radio" name="gender" value="female" ref={register({ required: true })} onChange={event => handleGenderChange(event)} />
+            <Input type="radio" name="gender" value="female" register={register} onChange={event => handleGenderChange(event)} />
             <label htmlFor="female">Female</label>
           </span>
           <span className="Form__gender-container">
-            <input type="radio" name="gender" value="male" ref={register({ required: true })} onChange={event => handleGenderChange(event)} />
+            <Input type="radio" name="gender" value="male" register={register} onChange={event => handleGenderChange(event)}  />
             <label htmlFor="male">Male</label>
           </span>
           <span className="Form__gender-container">
-            <input type="radio" name="gender" value="custom" ref={register({ required: true })} onChange={event => handleGenderChange(event)} />
+            <Input type="radio" name="gender" value="custom" register={register} onChange={event => handleGenderChange(event)}  />
             <label htmlFor="custom">Custom</label>
           </span>
           {errors.gender && <div><i className="Form__error-message">Gender is required.</i></div>}
           {showCustomGender && <div className="Form__gender-custom mt-m">
-            <select className="drop-down" name="preferred_pronoun" ref={register({ validate: { positive: value => isPositive(value) }})} id="" defaultValue="0">
-              <option value="0" disabled>Select your pronoun</option>
-              <option value="She">She: "Wish her a happy birthday!"</option>
-              <option value="He">He: "Wish him a happy birthday!"</option>
-              <option value="They">They: "Wish them a happy birthday!"</option>
-            </select>
+            <Select name="preferred_pronoun" register={register} id="" options={pronouns()} noValue={"Select your pronoun"} />
             {errors.preferred_pronoun && <div><i className="Form__error-message">Preferred pronoun is required.</i></div>}
             <div className="sub-text">Your pronoun is visible to everyone.</div>
             <div className="my-s">
-              <input type="text" className="input-text" name="custom_gender" ref={register} placeholder="Gender (optional)" />
+              <Input type="text" name="custom_gender" register={register} placeholder="Gender (optional)" />
             </div>
           </div>}
         </div>

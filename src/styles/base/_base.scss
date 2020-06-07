@@ -12,23 +12,9 @@ body {
   font-size: $font-s;
 }
 
-.input-text {
-  font-size: $font-m;
-  padding: 8px 10px;
-  box-sizing: border-box;
-  width: 100%;
-  border-color: $light-grey;
-  border-radius: 5px;
-  border: 1px solid $silver
-}
-
 label {
   vertical-align: middle;
   cursor: default;
-}
-
-.drop-down {
-  border: 1px solid #ccd0d5;
 }
 
 .sub-heading {
@@ -69,11 +55,6 @@ label {
   justify-content: space-between;
 }
 
-.drop-down {
-  font-size: $font-s;
-  padding: $space-xs;
-}
-
 .button-green {
   background: linear-gradient(#67ae55, #578843);
   background-color: #69a74e;
@@ -81,7 +62,7 @@ label {
   border-color: #3b6e22 #3b6e22 #2c5115;
 }
 
-.button {
+button {
   border: 1px solid;
   border-radius: 5px;
   color: $off-white;
