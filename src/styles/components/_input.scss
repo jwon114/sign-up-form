@@ -4,11 +4,8 @@ input {
   border: 1px solid $silver;
 }
 
-// input.form-error {
-//   border-color: red;
-// }
-
-input[type=text] {
+input[type=text],
+input[type=password] {
   outline: none;
   font-size: $font-m;
   padding: 8px 10px;

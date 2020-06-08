@@ -16,7 +16,7 @@ const SignUpForm = () => {
       <Form 
         onSubmit={handleFormSubmit} 
       />
-      {submittedState && <div>Form Submitted!</div>}
+      {submittedState && <h2>Form Submitted!</h2>}
     </div>
   );
 }

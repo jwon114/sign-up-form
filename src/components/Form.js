@@ -4,11 +4,16 @@ import { string, object } from 'yup';
 import Input from './Input';
 import Select from './Select';
 
+const validNumber = new RegExp(/^(\+[0-9]{2}|[0]{1})[0-9]{9,10}$/);
+const validEmail = new RegExp(/^([_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,5}))$/);
+const validContact = new RegExp(validNumber.source + "|" + validEmail.source);
+const validPassword = new RegExp(/^[\w\d!@#$%^&*]{6,}$/);
+
 const FormSchema = object().shape({
   firstName: string().required('First name is required'),
   surname: string().required('Surname is required'),
-  contact: string().required('Contact number or email is required'),
-  password: string().required('Password is required'),
+  contact: string().required('Contact number or email is required').matches(validContact, { message: 'Must be a valid email or phone number', excludeEmptyString: true }),
+  password: string().required('Password is required').matches(validPassword, { message: 'Enter a combination of at least six numbers, letters and any of these !@#$%^&* characters', excludeEmptyString: true }),
   birthday: object({
     day: string().required(),
     month: string().required(),
@@ -82,7 +87,7 @@ const Form = (props) => {
           {errors.contact && <i className="Form__error-message">{errors.contact.message}</i>}
         </div>
         <div className="Form__password mb-m">
-          <Input type="text" className={errors.password && 'red-border'} name="password" register={register} placeholder="New password" />
+          <Input type="password" className={errors.password && 'red-border'} name="password" register={register} placeholder="New password" />
           {errors.password && <i className="Form__error-message">{errors.password.message}</i>}
         </div>
         <div className="Form__birthday">
