@@ -3,5 +3,6 @@
 exports[`renders correctly 1`] = `
 <input
   name="test"
+  type="text"
 />
 `;
