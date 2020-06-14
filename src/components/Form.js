@@ -51,7 +51,7 @@ const years = () => {
 }
 
 const pronouns = () => {
-  const pronounList = ['She: "Wish her a happy birthday!', 'He: "Wish him a happy birthday!"', 'They: "Wish them a happy birthday!"'];
+  const pronounList = ['She: "Wish her a happy birthday!"', 'He: "Wish him a happy birthday!"', 'They: "Wish them a happy birthday!"'];
   return pronounList.map((pronoun, i) => <option key={i + 1} value={i + 1}>{pronoun}</option>);
 }
 
@@ -105,16 +105,16 @@ const Form = (props) => {
             <label htmlFor="gender">Gender</label>
           </div>
           <span className={`Form__gender-container ${errors.gender && 'red-border'}`}>
-            <Input type="radio" name="gender" value="female" register={register} onChange={event => handleGenderChange(event)} />
-            <label htmlFor="female">Female</label>
+            <Input type="radio" id="female-input" name="gender" value="female" register={register} onChange={event => handleGenderChange(event)} />
+            <label htmlFor="female-input">Female</label>
           </span>
           <span className={`Form__gender-container ${errors.gender && 'red-border'}`}>
-            <Input type="radio" name="gender" value="male" register={register} onChange={event => handleGenderChange(event)}  />
-            <label htmlFor="male">Male</label>
+            <Input type="radio" id="male-input" name="gender" value="male" register={register} onChange={event => handleGenderChange(event)}  />
+            <label htmlFor="male-input">Male</label>
           </span>
           <span className={`Form__gender-container ${errors.gender && 'red-border'}`}>
-            <Input type="radio" name="gender" value="custom" register={register} onChange={event => handleGenderChange(event)}  />
-            <label htmlFor="custom">Custom</label>
+            <Input type="radio" id="custom-input" name="gender" value="custom" register={register} onChange={event => handleGenderChange(event)}  />
+            <label htmlFor="custom-input">Custom</label>
           </span>
           {errors.gender && <div><i className="Form__error-message">Gender is required.</i></div>}
           {showCustomGender && <div className="Form__gender-custom mt-m">

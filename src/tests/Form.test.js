@@ -64,7 +64,7 @@ describe('testing form inputs', () => {
     expect(password.value).toEqual('password123');
   });
 
-  test('birthday day selection', () => {
+  test('birthday day selection dropdown options', () => {
     const { getByDisplayValue } = render(<Form onSubmit={jest.fn()} />);
     const day = getByDisplayValue('Day');
     expect(day.options.length).toEqual(32);
@@ -73,7 +73,7 @@ describe('testing form inputs', () => {
     expect(day.options[day.selectedIndex].text).toEqual('1');
   });
 
-  test('birthday month selection', () => {
+  test('birthday month selection dropdown options', () => {
     const { getByDisplayValue } = render(<Form onSubmit={jest.fn()} />);
     const month = getByDisplayValue('Month');
     expect(month.options.length).toEqual(13);
@@ -82,7 +82,7 @@ describe('testing form inputs', () => {
     expect(month.options[month.selectedIndex].text).toEqual('May');
   });
 
-  test('birthday year selection', () => {
+  test('birthday year selection dropdown options', () => {
     const { getByDisplayValue } = render(<Form onSubmit={jest.fn()} />);
     const year = getByDisplayValue('Year');
     expect(year.options.length).toEqual(117);
@@ -91,7 +91,52 @@ describe('testing form inputs', () => {
     expect(year.options[year.selectedIndex].text).toEqual('1995');
   });
 
-  test('gender selection', () => {
-
+  test('gender selection radio input', () => {
+    const { getByLabelText } = render(<Form onSubmit={jest.fn()} />);
+    const male = getByLabelText('Male');
+    const female = getByLabelText('Female');
+    const custom = getByLabelText('Custom');
+    expect(male).not.toBeChecked();
+    expect(female).not.toBeChecked();
+    expect(custom).not.toBeChecked();
+    fireEvent.click(female);
+    expect(male).not.toBeChecked();
+    expect(female).toBeChecked();
+    expect(custom).not.toBeChecked();
+    fireEvent.click(male);
+    expect(male).toBeChecked();
+    expect(female).not.toBeChecked();
+    expect(custom).not.toBeChecked();
+    fireEvent.click(custom);
+    expect(male).not.toBeChecked();
+    expect(female).not.toBeChecked();
+    expect(custom).toBeChecked();
   });
+
+  test('custom gender selected dropdown options', () => {
+    const { getByDisplayValue, getByLabelText, getByText } = render(<Form onSubmit={jest.fn()} />);
+    const custom = getByLabelText('Custom');
+    fireEvent.click(custom);
+    expect(getByText('Your pronoun is visible to everyone.')).toBeInTheDocument();
+    const pronoun = getByDisplayValue('Select your pronoun');
+    expect(pronoun.options.length).toEqual(4);
+    expect(pronoun.options[pronoun.selectedIndex].text).toEqual('Select your pronoun');
+    fireEvent.change(pronoun, { target: { value: '1' } });
+    expect(pronoun.options[pronoun.selectedIndex].text).toEqual('She: \"Wish her a happy birthday!\"');
+    fireEvent.change(pronoun, { target: { value: '2' } });
+    expect(pronoun.options[pronoun.selectedIndex].text).toEqual('He: \"Wish him a happy birthday!\"');
+    fireEvent.change(pronoun, { target: { value: '3' } });
+    expect(pronoun.options[pronoun.selectedIndex].text).toEqual('They: \"Wish them a happy birthday!\"');
+  });
+  
+  test('custom gender input', () => {
+    const { getByLabelText, getByPlaceholderText } = render(<Form onSubmit={jest.fn()} />);
+    const custom = getByLabelText('Custom');
+    fireEvent.click(custom);
+    const customInput = getByPlaceholderText('Gender (optional)');
+    expect(customInput.value).toEqual('');
+    fireEvent.change(customInput, { target: { value: 'My custom' } });
+    expect(customInput.value).toEqual('My custom');
+  });
+  
 });

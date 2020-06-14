@@ -2,7 +2,7 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import Select from '../components/Select';
 
-it('renders correctly', () => {
+test('renders correctly', () => {
   const tree = renderer
     .create(<Select 
       register={jest.fn()}

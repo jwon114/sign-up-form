@@ -899,13 +899,14 @@ exports[`renders correctly 1`] = `
         className="Form__gender-container undefined"
       >
         <input
+          id="female-input"
           name="gender"
           onChange={[Function]}
           type="radio"
           value="female"
         />
         <label
-          htmlFor="female"
+          htmlFor="female-input"
         >
           Female
         </label>
@@ -914,13 +915,14 @@ exports[`renders correctly 1`] = `
         className="Form__gender-container undefined"
       >
         <input
+          id="male-input"
           name="gender"
           onChange={[Function]}
           type="radio"
           value="male"
         />
         <label
-          htmlFor="male"
+          htmlFor="male-input"
         >
           Male
         </label>
@@ -929,13 +931,14 @@ exports[`renders correctly 1`] = `
         className="Form__gender-container undefined"
       >
         <input
+          id="custom-input"
           name="gender"
           onChange={[Function]}
           type="radio"
           value="custom"
         />
         <label
-          htmlFor="custom"
+          htmlFor="custom-input"
         >
           Custom
         </label>
