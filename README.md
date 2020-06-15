@@ -1,5 +1,8 @@
 # Sign Up Form
-My attempt at replicating Facebook's sign up form. My desire to practice React and forms was the motivation behind this. This is purely a front end design, it does not submit any data.
+My attempt at replicating Facebook's sign up form complete with validations. My desire to practice React and forms was the motivation behind this. This is purely a front end design, it does not submit any data.
+
+* react-hook-form form validations
+* yup object schema validation
 
 ![Sign Up Form](https://github.com/jwon114/sign-up-form/raw/master/screenshots/sign-up-form.png)
 
